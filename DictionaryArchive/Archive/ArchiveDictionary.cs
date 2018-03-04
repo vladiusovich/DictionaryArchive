@@ -1,10 +1,12 @@
 ﻿using DictionaryArchive.Infrastructure;
+using Json2KeyValue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace DictionaryArchive.Archive
 {
@@ -37,10 +39,7 @@ namespace DictionaryArchive.Archive
             get { return _wordsDictionary; }
         }
 
-        public ArchiveDictionary(string input)
-        {
-            _sourceString = input;
-        }
+        public ArchiveDictionary() { }
 
         public bool Encode()
         {
@@ -63,7 +62,26 @@ namespace DictionaryArchive.Archive
 
         public string DictonaryToJSON()
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> bufferDic= new Dictionary<string, string>();
+
+            foreach (var keyValue in _wordsDictionary)
+            {
+                bufferDic.Add(keyValue.Key.ToString(), keyValue.Value);
+            }
+            
+            return JsonConvert.SerializeObject(bufferDic, Formatting.Indented);
+        }
+
+        public string DictonaryToString()
+        {
+            string bufferString = "";
+
+            foreach (var keyValue in _wordsDictionary)
+            {
+                bufferString += $"{keyValue.Key}:{keyValue.Value},";
+            }
+
+            return bufferString;
         }
 
         private List<string> SplitText(string input)
@@ -100,7 +118,7 @@ namespace DictionaryArchive.Archive
             foreach (var keyValue in _wordsDictionary)
             {
                 var pattern = @"\b" + $"{keyValue.Value}" + @"\b";
-                progressString = Regex.Replace(progressString, pattern, $"{keyValue.Key} ");
+                progressString = Regex.Replace(progressString, pattern, $"{keyValue.Key}");
             }
 
             return progressString;

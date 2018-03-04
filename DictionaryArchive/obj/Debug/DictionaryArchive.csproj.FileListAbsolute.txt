@@ -12,3 +12,4 @@ L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.Pro
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.csproj.GenerateResource.Cache
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.exe
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.pdb
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\Json2KeyValue.dll
