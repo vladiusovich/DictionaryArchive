@@ -22,7 +22,6 @@ namespace DictionaryArchive
         private string dictionaryString;
         private string resultString;
 
-        private int keyId = 0;
 
         public MainWindow()
         {
@@ -41,29 +40,16 @@ namespace DictionaryArchive
                 sourceString = inputString;
             }
 
-            var allWords = ArchiveDictionary.GetAllWords(inputString);
+            ArchiveDictionary archiveDictionary = new ArchiveDictionary(inputString);
 
-            string progressDictionaryString = "";
-            foreach (var keyValue in wordsDictionary)
-            {
-                progressDictionaryString += $"{keyValue.Key}: {keyValue.Value} {Environment.NewLine}";
-            }
+            var encodeSuccess = archiveDictionary.Encode();
 
-            WordDictionary.Text = progressDictionaryString;
-            dictionaryString = progressDictionaryString;
-            DictionarySize.Text += wordsDictionary.Count;
+            WordDictionary.Text = "";
+            DictionarySize.Text += archiveDictionary.Dictonary.Count;
 
-            WordCount.Text += allWords.Count;
+            //WordCount.Text += allWords.Count;
 
-            string progressString = sourceString;
-            foreach (var keyValue in wordsDictionary)
-            {
-                var pattern = @"\b" + $"{keyValue.Value}" + @"\b";
-                progressString = Regex.Replace(progressString, pattern, $"{keyValue.Key} ");
-            }
-
-            resultString = progressString;
-            ResultForm.Text = resultString;
+            ResultForm.Text = archiveDictionary.EncodeString;
         }
 
         private void SaveResultHandler(object sender, RoutedEventArgs e)
