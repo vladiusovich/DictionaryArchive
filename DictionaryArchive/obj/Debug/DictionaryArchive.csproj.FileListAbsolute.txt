@@ -1,1 +1,14 @@
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\DictionaryArchive.exe.config
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.csprojResolveAssemblyReference.cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\MainWindow.g.cs
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\App.g.cs
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive_MarkupCompile.cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive_MarkupCompile.lref
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\DictionaryArchive.exe
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\DictionaryArchive.pdb
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\MainWindow.baml
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.g.resources
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.Properties.Resources.resources
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.csproj.GenerateResource.Cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.exe
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.pdb
