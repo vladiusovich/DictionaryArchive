@@ -13,10 +13,12 @@ namespace DictionaryArchive.Archive
     public class ArchiveDictionary: IArchiveDictonary
     {
         //private Regex wordsPattern = new Regex("\\w+|\\W+");
+        private Regex decodePattern = new Regex("\\d+");
         private Regex wordsPattern = new Regex("\\w+");
 
         private string _sourceString = "";
         private string _encodeString = "";
+        private string _decodeString = "";
 
         private Dictionary<int, string> _wordsDictionary = new Dictionary<int, string>();
         private List<string> _allWords = new List<string>();
@@ -26,6 +28,11 @@ namespace DictionaryArchive.Archive
         public string EncodeString
         {
             get { return _encodeString; }
+        }
+
+        public string DecodeString
+        {
+            get { return _decodeString; }
         }
 
         public string SourceString
@@ -41,48 +48,81 @@ namespace DictionaryArchive.Archive
 
         public ArchiveDictionary() { }
 
+        public void OpenDictionary(string dictionaryJsonString)
+        {
+            var deserializeDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(dictionaryJsonString);
+
+            foreach (var keyValue in deserializeDictionary)
+            {
+                AddWordToDictionary(keyValue.Value);
+            }
+        }
+
         public bool Encode()
         {
-            if (_sourceString != string.Empty)
-            {
-                _allWords = SplitText(_sourceString);
-                _wordsDictionary = CreateDictionary(_allWords);
-            }
-
             if (_wordsDictionary.Any())
                 _encodeString = EncodeProcess();
 
             return _encodeString.Length != 0;
         }
 
-        public bool Decode()
+        public bool Decode(string encodeString)
         {
-            throw new NotImplementedException();
+            _decodeString = DecodeProcess(encodeString);
+            return _decodeString.Length > 0;
         }
 
-        public string DictonaryToJSON()
+        //Добавить в словарь слова если их нет
+        public void AddWordToDictionary(string word)
         {
-            Dictionary<string, string> bufferDic= new Dictionary<string, string>();
+            int id;
+
+            if (word != string.Empty)
+            {
+                if (!_wordsDictionary.ContainsValue(word))
+                {
+                    if (_wordsDictionary.Any())
+                    {
+                        id = _wordsDictionary.Last().Key;
+                    } else
+                    {
+                        id = keyId;
+                    }
+                    _wordsDictionary.Add(++id, word);
+                }
+            }
+        }
+
+
+        //Переписчать
+        public bool AddToDictionary(string sourceString)
+        {
+            if (sourceString != string.Empty)
+            {
+                _allWords = SplitText(_sourceString);
+
+                foreach (var word in _allWords)
+                {
+                    AddWordToDictionary(word);
+                }
+            }
+
+            return _wordsDictionary.Count > 0;
+        }
+
+        private string DecodeProcess(string encodeString)
+        {
+            var progressString = encodeString;
 
             foreach (var keyValue in _wordsDictionary)
             {
-                bufferDic.Add(keyValue.Key.ToString(), keyValue.Value);
-            }
-            
-            return JsonConvert.SerializeObject(bufferDic, Formatting.Indented);
-        }
-
-        public string DictonaryToString()
-        {
-            string bufferString = "";
-
-            foreach (var keyValue in _wordsDictionary)
-            {
-                bufferString += $"{keyValue.Key}:{keyValue.Value},";
+                var wordPattern = @"\b" + $"{keyValue.Key}" + @"\b";
+                progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Value} ");
             }
 
-            return bufferString;
+            return progressString;
         }
+
 
         private List<string> SplitText(string input)
         {
@@ -117,13 +157,51 @@ namespace DictionaryArchive.Archive
 
             foreach (var keyValue in _wordsDictionary)
             {
-                var pattern = @"\b" + $"{keyValue.Value}" + @"\b";
-                progressString = Regex.Replace(progressString, pattern, $"{keyValue.Key}");
+                var trimWord = keyValue.Value.Trim();
+
+                var wordPattern = @"\b" + $"{keyValue.Value}" + @"\b";
+                var punctuationPattern = $"[{trimWord}]";
+
+                progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key} ");
+
+
+                //if (trimWord.Length == 1)
+                //{
+                //    if (char.IsPunctuation(trimWord[0]))
+                //        progressString = Regex.Replace(progressString, punctuationPattern, $"{keyValue.Key} ");
+                //} else
+                //{
+                //    progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key} ");
+                //}
+
             }
 
             return progressString;
         }
 
+        public string DictonaryToJSON()
+        {
+            Dictionary<string, string> bufferDic = new Dictionary<string, string>();
+
+            foreach (var keyValue in _wordsDictionary)
+            {
+                bufferDic.Add(keyValue.Key.ToString(), keyValue.Value);
+            }
+
+            return JsonConvert.SerializeObject(bufferDic, Formatting.None);
+        }
+
+        public string DictonaryToString()
+        {
+            string bufferString = "";
+
+            foreach (var keyValue in _wordsDictionary)
+            {
+                bufferString += $"{keyValue.Key}:{keyValue.Value},";
+            }
+
+            return bufferString;
+        }
 
     }
 }

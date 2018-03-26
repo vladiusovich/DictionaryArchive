@@ -27,6 +27,8 @@
         <Button x:Name="SaveResult" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="60,106,0,0" VerticalAlignment="Top" Width="125" Click="SaveResultHandler" Grid.Row="1"/>
         <TextBlock x:Name="LengthResult" Text="Length: " HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="245,108,0,0" Width="127" Grid.Row="1" Grid.Column="1"/>
         <TextBlock x:Name="LengthSorce" Text="Length: " HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="113,52,0,0" Width="126" Grid.Column="1"/>
+        <Button x:Name="Encode" Content="Encode" Grid.Column="1" HorizontalAlignment="Left" Margin="54,20,0,0" VerticalAlignment="Top" Width="75" Click="Encode_Click"/>
+        <Button x:Name="Decode" Content="Decode" Grid.Column="1" HorizontalAlignment="Left" Margin="157,20,0,0" VerticalAlignment="Top" Width="75" Click="Decode_Click"/>
 
     </Grid>
 </Window>

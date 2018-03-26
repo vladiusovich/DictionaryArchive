@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DictionaryArchive.Infrastructure
 {
     public interface IArchiveDictonary
     {
         bool Encode();
-        bool Decode();
+        bool Decode(string encodeString);
         string DictonaryToJSON();
         string EncodeString { get; }
         string SourceString { get; set; }
