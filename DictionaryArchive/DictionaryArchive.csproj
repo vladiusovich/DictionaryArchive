@@ -68,6 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Archive\ArchiveDictionary.cs" />
+    <Compile Include="Archive\SortedModel.cs" />
     <Compile Include="Helpers\EncodeDecodeHelper.cs" />
     <Compile Include="Infrastructure\IArchiveDictonary.cs" />
     <Compile Include="MainWindow.xaml.cs">

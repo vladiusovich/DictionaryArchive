@@ -52,6 +52,8 @@ namespace DictionaryArchive.Archive
         {
             var deserializeDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(dictionaryJsonString);
 
+            if (deserializeDictionary == null) return;
+
             foreach (var keyValue in deserializeDictionary)
             {
                 AddWordToDictionary(keyValue.Value);
@@ -61,7 +63,10 @@ namespace DictionaryArchive.Archive
         public bool Encode()
         {
             if (_wordsDictionary.Any())
+            {
+                var refa = RefactoringDictionary();
                 _encodeString = EncodeProcess();
+            }
 
             return _encodeString.Length != 0;
         }
@@ -154,7 +159,6 @@ namespace DictionaryArchive.Archive
         private string EncodeProcess()
         {
             var progressString = _sourceString;
-
             foreach (var keyValue in _wordsDictionary)
             {
                 var trimWord = keyValue.Value.Trim();
@@ -162,7 +166,7 @@ namespace DictionaryArchive.Archive
                 var wordPattern = @"\b" + $"{keyValue.Value}" + @"\b";
                 var punctuationPattern = $"[{trimWord}]";
 
-                progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key} ");
+                progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key}");
 
 
                 //if (trimWord.Length == 1)
@@ -177,6 +181,43 @@ namespace DictionaryArchive.Archive
             }
 
             return progressString;
+        }
+
+        private List<KeyValuePair<int, SortedModel>> RefactoringDictionary()
+        {
+            Dictionary<int, SortedModel> sortedDictionary = new Dictionary<int, SortedModel>();
+            int id = 0;
+
+            /*
+                У коэффициэнтов на частоту вхождений и на длинну слова должны быть разные значения. 
+            */
+            const decimal lengthWordFactor = 1;
+            const decimal frequencyWordInTextFactor = 1;
+
+            foreach (var keyValue in _wordsDictionary)
+            {
+                int frequencyWordInText = Regex.Matches(_sourceString, keyValue.Value).Count;
+
+                /*
+                    sortFactor прямо пропорционален частоте вхождения слова и обратно пропорционален его длинне
+                */
+
+                decimal sortFactor = (decimal)(frequencyWordInText * frequencyWordInTextFactor)/ lengthWordFactor * keyValue.Value.Length;
+
+                sortedDictionary.Add(id++, new SortedModel { SortFactor = sortFactor, Word = keyValue.Value });
+            }
+
+            var list = sortedDictionary.ToList().OrderBy(i => i.Value.SortFactor).ToList();
+
+            _wordsDictionary.Clear();
+
+            id = 0;
+            foreach (var item in list)
+            {
+                _wordsDictionary.Add(id++, item.Value.Word);
+            }
+
+            return list;
         }
 
         public string DictonaryToJSON()

@@ -37,10 +37,19 @@ namespace DictionaryArchive
                 inputString = File.ReadAllText(openFileDialog.FileName);
                 SourceString.Text = inputString;
                 archiveDictionary.SourceString = inputString;
+                try
+                {
+                    dictionaryString = File.ReadAllText(dictionaryPath);
+                    archiveDictionary.OpenDictionary(dictionaryString);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    var fileStream = File.Create(dictionaryPath);
+                }
+                finally
+                {
 
-                dictionaryString = File.ReadAllText(dictionaryPath);
-
-                archiveDictionary.OpenDictionary(dictionaryString);
+                }
 
                 WordDictionary.Text = archiveDictionary.DictonaryToJSON();
                 DictionarySize.Text += archiveDictionary.Dictonary.Count;
@@ -72,8 +81,6 @@ namespace DictionaryArchive
             archiveDictionary.AddToDictionary(SourceString.Text);
 
             var encodeSuccess = archiveDictionary.Encode();
-
-           
 
             LengthSorce.Text += archiveDictionary.SourceString.Length;
             LengthResult.Text += archiveDictionary.EncodeString.Length;
