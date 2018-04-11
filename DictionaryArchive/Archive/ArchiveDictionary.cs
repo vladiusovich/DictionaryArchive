@@ -17,15 +17,15 @@ namespace DictionaryArchive.Archive
         private Regex wordsPattern = new Regex("\\w+");
 
         private string _sourceString = "";
-        private string _encodeString = "";
+        private byte[] _encodeString;
         private string _decodeString = "";
 
-        private Dictionary<int, string> _wordsDictionary = new Dictionary<int, string>();
+        private Dictionary<ushort, string> _wordsDictionary = new Dictionary<ushort, string>();
         private List<string> _allWords = new List<string>();
 
-        private int keyId = 0;
+        private ushort keyId = 0;
 
-        public string EncodeString
+        public byte[] EncodeString
         {
             get { return _encodeString; }
         }
@@ -41,7 +41,7 @@ namespace DictionaryArchive.Archive
             set { _sourceString = value; }
         }
 
-        public Dictionary<int, string> Dictonary
+        public Dictionary<ushort, string> Dictonary
         {
             get { return _wordsDictionary; }
         }
@@ -68,7 +68,7 @@ namespace DictionaryArchive.Archive
                 _encodeString = EncodeProcess();
             }
 
-            return _encodeString.Length != 0;
+            return (_encodeString != null);
         }
 
         public bool Decode(string encodeString)
@@ -80,7 +80,7 @@ namespace DictionaryArchive.Archive
         //Добавить в словарь слова если их нет
         public void AddWordToDictionary(string word)
         {
-            int id;
+            ushort id;
 
             if (word != string.Empty)
             {
@@ -98,9 +98,8 @@ namespace DictionaryArchive.Archive
             }
         }
 
-
         //Переписчать
-        public bool AddToDictionary(string sourceString)
+        public bool CreateDictionary(string sourceString)
         {
             if (sourceString != string.Empty)
             {
@@ -110,6 +109,8 @@ namespace DictionaryArchive.Archive
                 {
                     AddWordToDictionary(word);
                 }
+
+                SavePunctuation(sourceString);
             }
 
             return _wordsDictionary.Count > 0;
@@ -127,8 +128,16 @@ namespace DictionaryArchive.Archive
 
             return progressString;
         }
-
-
+        private List<string> SavePunctuation(string input)
+        {
+            foreach (var symbol in input)
+            {
+                if (char.IsPunctuation(symbol) || symbol == ' ') {
+                    AddWordToDictionary(symbol.ToString());
+                }
+            }
+            return wordsPattern.Matches(input).Cast<Match>().Select(match => match.Value.Trim()).Distinct().ToList();
+        }
         private List<string> SplitText(string input)
         {
             return wordsPattern.Matches(input).Cast<Match>().Select(match => match.Value.Trim()).Distinct().ToList();
@@ -148,45 +157,73 @@ namespace DictionaryArchive.Archive
                     wordsDictionary.Add(keyId++, word);
             }
 
-            foreach (var keyValue in wordsDictionary)
-            {
-                //progressDictionaryString += $"{keyValue.Key}: {keyValue.Value} {Environment.NewLine}";
-            }
-
             return wordsDictionary;
         }
 
-        private string EncodeProcess()
+        private byte[] EncodeProcess()
         {
-            var progressString = _sourceString;
-            foreach (var keyValue in _wordsDictionary)
+            byte[] encodeResult = ParseString();
+
+            return encodeResult;
+        }
+
+        private byte[] ParseString()
+        {
+            string currentParseWord = string.Empty;
+            Stack <byte> encodeResult = new Stack<byte>();
+            byte[] encodeId = new byte[] { };
+
+            ushort wordId;
+
+            for (int index = 0; index < _sourceString.Length; index++)
             {
-                var trimWord = keyValue.Value.Trim();
+                var gliphy = _sourceString[index];
 
-                var wordPattern = @"\b" + $"{keyValue.Value}" + @"\b";
-                var punctuationPattern = $"[{trimWord}]";
+                currentParseWord += gliphy;
+                try
+                {
+                    wordId = GetWordId(currentParseWord);
+                    encodeId = UsortToButes(wordId);
+                    PushToStack(ref encodeId, ref encodeResult);
+                    currentParseWord = string.Empty;
 
-                progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key}");
-
-
-                //if (trimWord.Length == 1)
-                //{
-                //    if (char.IsPunctuation(trimWord[0]))
-                //        progressString = Regex.Replace(progressString, punctuationPattern, $"{keyValue.Key} ");
-                //} else
-                //{
-                //    progressString = Regex.Replace(progressString, wordPattern, $"{keyValue.Key} ");
-                //}
+                } catch (Exception ex)
+                {
+                    continue;
+                }
 
             }
 
-            return progressString;
+        byte[] byteArrayEncodeResult = encodeResult.ToArray();
+
+            Array.Reverse(byteArrayEncodeResult);
+            return byteArrayEncodeResult;
         }
 
-        private List<KeyValuePair<int, SortedModel>> RefactoringDictionary()
+        private void PushToStack(ref byte[] encodeId, ref Stack<byte> encodeResult)
         {
-            Dictionary<int, SortedModel> sortedDictionary = new Dictionary<int, SortedModel>();
-            int id = 0;
+            foreach (var b in encodeId)
+            {
+                encodeResult.Push(b);
+            }
+        }
+
+        private byte[] UsortToButes(ushort n)
+        {
+            byte[] keyBytes = BitConverter.GetBytes(n);
+            Array.Reverse(keyBytes);
+            return keyBytes;
+        }
+
+        private ushort GetWordId(string word)
+        {
+            return _wordsDictionary.First(x => x.Value == word).Key;
+        }
+
+        private List<KeyValuePair<ushort, SortedModel>> RefactoringDictionary()
+        {
+            Dictionary<ushort, SortedModel> sortedDictionary = new Dictionary<ushort, SortedModel>();
+            ushort id = 0;
 
             /*
                 У коэффициэнтов на частоту вхождений и на длинну слова должны быть разные значения. 
@@ -196,18 +233,21 @@ namespace DictionaryArchive.Archive
 
             foreach (var keyValue in _wordsDictionary)
             {
-                int frequencyWordInText = Regex.Matches(_sourceString, keyValue.Value).Count;
+                /* Проблема с [] ()  */
+                int frequencyWordInText = Regex.Matches(_sourceString, @"\b" + $"{keyValue.Value}" + @"\b").Count;
 
                 /*
                     sortFactor прямо пропорционален частоте вхождения слова и обратно пропорционален его длинне
                 */
 
-                decimal sortFactor = (decimal)(frequencyWordInText * frequencyWordInTextFactor)/ lengthWordFactor * keyValue.Value.Length;
+                //decimal sortFactor = (decimal)(frequencyWordInText * frequencyWordInTextFactor)/ lengthWordFactor * keyValue.Value.Length;
+
+                decimal sortFactor = frequencyWordInText;
 
                 sortedDictionary.Add(id++, new SortedModel { SortFactor = sortFactor, Word = keyValue.Value });
             }
 
-            var list = sortedDictionary.ToList().OrderBy(i => i.Value.SortFactor).ToList();
+            var list = sortedDictionary.ToList().OrderByDescending(i => i.Value.SortFactor).ToList();
 
             _wordsDictionary.Clear();
 

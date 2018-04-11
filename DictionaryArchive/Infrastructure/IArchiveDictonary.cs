@@ -8,8 +8,8 @@ namespace DictionaryArchive.Infrastructure
         bool Encode();
         bool Decode(string encodeString);
         string DictonaryToJSON();
-        string EncodeString { get; }
+        byte[] EncodeString { get; }
         string SourceString { get; set; }
-        Dictionary<int, string> Dictonary { get; }
+        Dictionary<ushort, string> Dictonary { get; }
     }
 }

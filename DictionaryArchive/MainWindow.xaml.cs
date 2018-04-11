@@ -59,10 +59,10 @@ namespace DictionaryArchive
         private void SaveResultHandler(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
+            //saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
 
             if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllText(saveFileDialog.FileName, archiveDictionary.EncodeString);
+                File.WriteAllBytes(saveFileDialog.FileName, archiveDictionary.EncodeString);
         }
 
         private void SaveDictionaryHandler(object sender, RoutedEventArgs e)
@@ -78,16 +78,27 @@ namespace DictionaryArchive
 
         private void Encode_Click(object sender, RoutedEventArgs e)
         {
-            archiveDictionary.AddToDictionary(SourceString.Text);
+            archiveDictionary.CreateDictionary(SourceString.Text);
 
             var encodeSuccess = archiveDictionary.Encode();
+
+            if (!encodeSuccess)
+            {
+                return;
+            }
 
             LengthSorce.Text += archiveDictionary.SourceString.Length;
             LengthResult.Text += archiveDictionary.EncodeString.Length;
 
             //WordCount.Text += allWords.Count;
 
-            ResultForm.Text = archiveDictionary.EncodeString;
+            string resultEncode = "";
+            foreach (var s in archiveDictionary.EncodeString)
+            {
+                resultEncode += s;
+            }
+
+            ResultForm.Text = resultEncode;
         }
 
         private void Decode_Click(object sender, RoutedEventArgs e)
