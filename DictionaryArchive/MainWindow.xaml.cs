@@ -56,13 +56,50 @@ namespace DictionaryArchive
             }
         }
 
+        private void openEncodeFileHandler(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            string dictionaryString;
+            byte[] inputBytes;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                inputBytes = File.ReadAllBytes(openFileDialog.FileName);
+                archiveDictionary.EncodeBytes = inputBytes;
+
+                string resultEncode = "";
+                foreach (var s in inputBytes)
+                {
+                    resultEncode += s;
+                }
+                SourceString.Text = resultEncode;
+                try
+                {
+                    dictionaryString = File.ReadAllText(dictionaryPath);
+                    archiveDictionary.OpenDictionary(dictionaryString);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    var fileStream = File.Create(dictionaryPath);
+                }
+                finally
+                {
+
+                }
+
+                WordDictionary.Text = archiveDictionary.DictonaryToJSON();
+                DictionarySize.Text += archiveDictionary.Dictonary.Count;
+            }
+        }
+
         private void SaveResultHandler(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             //saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
 
             if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllBytes(saveFileDialog.FileName, archiveDictionary.EncodeString);
+                File.WriteAllBytes(saveFileDialog.FileName, archiveDictionary.EncodeBytes);
         }
 
         private void SaveDictionaryHandler(object sender, RoutedEventArgs e)
@@ -76,34 +113,42 @@ namespace DictionaryArchive
                 File.WriteAllText(saveFileDialog.FileName, byteString);
         }
 
-        private void Encode_Click(object sender, RoutedEventArgs e)
+        private async void Encode_Click(object sender, RoutedEventArgs e)
         {
             archiveDictionary.CreateDictionary(SourceString.Text);
 
-            var encodeSuccess = archiveDictionary.Encode();
+            Task<bool> task = new Task<bool>(archiveDictionary.Encode);
+
+            task.Start();
+
+            var encodeSuccess = await task;
 
             if (!encodeSuccess)
             {
                 return;
             }
-
-            LengthSorce.Text += archiveDictionary.SourceString.Length;
-            LengthResult.Text += archiveDictionary.EncodeString.Length;
-
-            //WordCount.Text += allWords.Count;
-
-            string resultEncode = "";
-            foreach (var s in archiveDictionary.EncodeString)
+            else
             {
-                resultEncode += s;
+                LengthSorce.Text += archiveDictionary.SourceString.Length;
+                LengthResult.Text += archiveDictionary.EncodeBytes.Length;
+
+                //WordCount.Text += allWords.Count;
+
+                string resultEncode = "";
+                foreach (var s in archiveDictionary.EncodeBytes)
+                {
+                    resultEncode += s;
+                }
+
+                ResultForm.Text = resultEncode;
             }
 
-            ResultForm.Text = resultEncode;
+           
         }
 
         private void Decode_Click(object sender, RoutedEventArgs e)
         {
-            var decodeSuccess = archiveDictionary.Decode(archiveDictionary.SourceString);
+            var decodeSuccess = archiveDictionary.Decode(archiveDictionary.EncodeBytes);
 
             LengthSorce.Text += archiveDictionary.SourceString.Length;
             LengthResult.Text += archiveDictionary.DecodeString.Length;

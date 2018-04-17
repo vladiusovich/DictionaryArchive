@@ -16,7 +16,7 @@
             <ColumnDefinition Width="381*"/>
             <ColumnDefinition Width="277*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="OpenFile" Content="Open file" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Width="77" Click="openFileHandler"/>
+        <Button x:Name="OpenFile" Content="Open source file" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Width="77" Click="openFileHandler"/>
         <TextBox x:Name="SourceString" HorizontalAlignment="Left" Height="352" Margin="10,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="421" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <TextBox x:Name="WordDictionary" Grid.Column="2" Height="352" Margin="0,73,9,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.RowSpan="2"/>
         <TextBlock x:Name="DictionarySize" Text="Dictionary size: " HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="2" Margin="0,37,0,0" Width="123"/>
@@ -27,8 +27,9 @@
         <Button x:Name="SaveResult" Content="Save" Grid.Column="1" HorizontalAlignment="Left" Margin="60,106,0,0" VerticalAlignment="Top" Width="125" Click="SaveResultHandler" Grid.Row="1"/>
         <TextBlock x:Name="LengthResult" Text="Length: " HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="245,108,0,0" Width="127" Grid.Row="1" Grid.Column="1"/>
         <TextBlock x:Name="LengthSorce" Text="Length: " HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="113,52,0,0" Width="126" Grid.Column="1"/>
-        <Button x:Name="Encode" Content="Encode" Grid.Column="1" HorizontalAlignment="Left" Margin="54,20,0,0" VerticalAlignment="Top" Width="75" Click="Encode_Click"/>
-        <Button x:Name="Decode" Content="Decode" Grid.Column="1" HorizontalAlignment="Left" Margin="157,20,0,0" VerticalAlignment="Top" Width="75" Click="Decode_Click"/>
+        <Button x:Name="Encode" Content="Encode" Grid.Column="1" HorizontalAlignment="Left" Margin="162,20,0,0" VerticalAlignment="Top" Width="75" Click="Encode_Click"/>
+        <Button x:Name="Decode" Content="Decode" Grid.Column="1" HorizontalAlignment="Left" Margin="265,20,0,0" VerticalAlignment="Top" Width="75" Click="Decode_Click"/>
+        <Button x:Name="OpenDecodeFile" Content="Open encode file" HorizontalAlignment="Left" Margin="28,20,0,0" VerticalAlignment="Top" Width="77" Click="openEncodeFileHandler" Grid.Column="1"/>
 
     </Grid>
 </Window>
