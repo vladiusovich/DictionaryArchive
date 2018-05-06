@@ -12,7 +12,8 @@ namespace DictionaryArchive.Archive
     {
         //private Regex wordsPattern = new Regex("\\w+|\\W+");
         private Regex decodePattern = new Regex("\\d+");
-        private Regex wordsPattern = new Regex("([a-zA-Z'-]+)");
+        //private Regex wordsPattern = new Regex("([a-zA-Zа-яА-Я'-]+)");
+        private Regex wordsPattern = new Regex("[a-zA-Zа-яА-Я1-9]+");
 
         private string _sourceString = "";
         private byte[] encodeBytes;
@@ -198,10 +199,12 @@ namespace DictionaryArchive.Archive
 
             return decodeString;
         }
+
+
         private byte[] ParseString()
         {
             string currentParseWord = string.Empty;
-            Stack <byte> encodeResult = new Stack<byte>();
+            Stack<byte> encodeResult = new Stack<byte>();
             byte[] encodeId = new byte[] { };
 
             ushort wordId;
@@ -213,44 +216,40 @@ namespace DictionaryArchive.Archive
 
                     char gliphy = _sourceString[index];
 
+                    //Если глиф пробел или знак то ишем его в словаре и переходим к след глифу
+                    if (char.IsWhiteSpace(gliphy) || char.IsPunctuation(gliphy))
+                    {
+                        wordId = GetWordId(gliphy);
+                        encodeId = UsortToButes(wordId);
+                        PushToStack(ref encodeId, ref encodeResult);
+                        continue;
+                    }
+
+                    //пока не достигли конца текста - ищем слова
                     if (index + 1 < _sourceString.Length)
                     {
-
-                        if (char.IsLetter(_sourceString[index + 1]))
+                        //Если след буква значит слово не закончилось - добавляем к нелослоау и преходи к след глифу
+                        if (char.IsLetter(_sourceString[index + 1]) || char.IsNumber(_sourceString[index + 1]))
                         {
-                            if (char.IsWhiteSpace(gliphy))
-                            {
-                                wordId = GetWordId(gliphy);
-                                encodeId = UsortToButes(wordId);
-                                PushToStack(ref encodeId, ref encodeResult);
-                            }
-                            else
-                            {
-                                currentParseWord += gliphy;
-                            }
+                            currentParseWord += gliphy;
+                            continue;
                         }
+                        //иначе все же будет конец слова то добавляем последний глиф и ищем недослово
                         else
                         {
-                            if (char.IsWhiteSpace(gliphy))
-                            {
-                                wordId = GetWordId(gliphy);
-                                encodeId = UsortToButes(wordId);
-                                PushToStack(ref encodeId, ref encodeResult);
-                            }
-                            else
-                            {
-                                currentParseWord += gliphy;
-                            }
-
-                            if (_sourceString[index + 1] == '\'' || _sourceString[index + 1] == '-')
-                                continue;
-
+                            currentParseWord += gliphy;
                             wordId = GetWordId(currentParseWord);
                             encodeId = UsortToButes(wordId);
                             PushToStack(ref encodeId, ref encodeResult);
                             currentParseWord = string.Empty;
+                            continue;
+
+                            //Если служебный знак то идем к след глифу
+                            if (_sourceString[index + 1] == '\'')
+                                continue;
                         }
                     }
+                    // если конец текста то добаляем последний глиф к недослову. Ищем недослово и конец парсинга
                     else
                     {
                         currentParseWord += gliphy;
@@ -258,17 +257,20 @@ namespace DictionaryArchive.Archive
                         encodeId = UsortToButes(wordId);
                         PushToStack(ref encodeId, ref encodeResult);
                         currentParseWord = string.Empty;
+                        continue;
                     }
 
 
-                } catch (Exception ex)
+                }
+                catch (Exception ex)    
                 {
+                    currentParseWord = string.Empty;
                     continue;
                 }
 
             }
 
-        byte[] byteArrayEncodeResult = encodeResult.ToArray();
+            byte[] byteArrayEncodeResult = encodeResult.ToArray();
 
             Array.Reverse(byteArrayEncodeResult);
             return byteArrayEncodeResult;

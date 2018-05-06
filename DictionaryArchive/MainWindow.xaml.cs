@@ -1,4 +1,5 @@
 ﻿using DictionaryArchive.Archive;
+using System.Globalization;
 using DictionaryArchive.Helpers;
 using Microsoft.Win32;
 using System;
@@ -34,7 +35,7 @@ namespace DictionaryArchive
 
             if (openFileDialog.ShowDialog() == true)
             {
-                inputString = File.ReadAllText(openFileDialog.FileName);
+                inputString = File.ReadAllText(openFileDialog.FileName, Encoding.Unicode);
                 SourceString.Text = inputString;
                 archiveDictionary.SourceString = inputString;
                 try

@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\
 DictionaryArchive
 none
 false
-DEBUG;TRACE
+TRACE
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\App.xaml
 11151548125
 
-13607523330
+91458522498
 14-677865010
 MainWindow.xaml;
 

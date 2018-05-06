@@ -1,0 +1,16 @@
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Release\DictionaryArchive.exe.config
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Release\DictionaryArchive.exe
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Release\DictionaryArchive.pdb
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Release\Newtonsoft.Json.dll
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Release\Newtonsoft.Json.xml
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.csprojResolveAssemblyReference.cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\MainWindow.g.cs
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\App.g.cs
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive_MarkupCompile.cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive_MarkupCompile.lref
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\MainWindow.baml
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.g.resources
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.Properties.Resources.resources
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.csproj.GenerateResource.Cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.exe
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Release\DictionaryArchive.pdb
