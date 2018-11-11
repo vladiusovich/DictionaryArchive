@@ -1,13 +1,8 @@
 ﻿using DictionaryArchive.Archive;
-using System.Globalization;
-using DictionaryArchive.Helpers;
 using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -20,7 +15,11 @@ namespace DictionaryArchive
     {
         private Dictionary<int, string> wordsDictionary = new Dictionary<int, string>();
         ArchiveDictionary archiveDictionary = new ArchiveDictionary();
-        string dictionaryPath = $"L:\\Магистратура\\Tests for programm\\dictionary.txt";
+        string dictionaryPath = $"dictionary.txt";
+
+        private byte[] inputBytes;
+        private string inputFile = string.Empty;
+        string dictionaryString = string.Empty;
 
         public MainWindow()
         {
@@ -31,17 +30,14 @@ namespace DictionaryArchive
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            string inputString, dictionaryString;
-
             if (openFileDialog.ShowDialog() == true)
             {
-                inputString = File.ReadAllText(openFileDialog.FileName, Encoding.Unicode);
-                SourceString.Text = inputString;
-                archiveDictionary.SourceString = inputString;
                 try
                 {
-                    dictionaryString = File.ReadAllText(dictionaryPath);
-                    archiveDictionary.OpenDictionary(dictionaryString);
+                    inputFile = File.ReadAllText(openFileDialog.FileName, Encoding.Unicode);
+
+                    SourceString.Text = inputFile;
+
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -61,13 +57,11 @@ namespace DictionaryArchive
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            string dictionaryString;
-            byte[] inputBytes;
-
             if (openFileDialog.ShowDialog() == true)
             {
                 inputBytes = File.ReadAllBytes(openFileDialog.FileName);
-                archiveDictionary.EncodeBytes = inputBytes;
+                dictionaryString = File.ReadAllText(openFileDialog.FileName + ".dic");
+                archiveDictionary.SetDictionary(dictionaryString);
 
                 string resultEncode = "";
                 foreach (var s in inputBytes)
@@ -75,86 +69,64 @@ namespace DictionaryArchive
                     resultEncode += s;
                 }
                 SourceString.Text = resultEncode;
-                try
-                {
-                    dictionaryString = File.ReadAllText(dictionaryPath);
-                    archiveDictionary.OpenDictionary(dictionaryString);
-                }
-                catch (FileNotFoundException ex)
-                {
-                    var fileStream = File.Create(dictionaryPath);
-                }
-                finally
-                {
-
-                }
 
                 WordDictionary.Text = archiveDictionary.DictonaryToJSON();
                 DictionarySize.Text += archiveDictionary.Dictonary.Count;
             }
         }
 
-        private void SaveResultHandler(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            //saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
-
-            if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllBytes(saveFileDialog.FileName, archiveDictionary.EncodeBytes);
-        }
-
+  
         private void SaveDictionaryHandler(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt|C# file (*.cs)|*.cs";
 
-            var byteString = archiveDictionary.DictonaryToJSON();
-
-            if (saveFileDialog.ShowDialog() == true)
-                File.WriteAllText(saveFileDialog.FileName, byteString);
+            var dictonaryToJSON = archiveDictionary.DictonaryToJSON();
+                File.WriteAllText(dictionaryPath, dictonaryToJSON);
         }
 
-        private async void Encode_Click(object sender, RoutedEventArgs e)
+        private void Compress_Click(object sender, RoutedEventArgs e)
         {
-            archiveDictionary.CreateDictionary(SourceString.Text);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            Task<bool> task = new Task<bool>(archiveDictionary.Encode);
-
-            task.Start();
-
-            var encodeSuccess = await task;
-
-            if (!encodeSuccess)
+            if (saveFileDialog.ShowDialog() == true)
             {
-                return;
-            }
-            else
-            {
-                LengthSorce.Text += archiveDictionary.SourceString.Length;
-                LengthResult.Text += archiveDictionary.EncodeBytes.Length;
+                var result = archiveDictionary.Compress(inputFile);
 
-                //WordCount.Text += allWords.Count;
+                File.WriteAllBytes(saveFileDialog.FileName, result.EncodeBytes.ToArray());
+                File.WriteAllText(saveFileDialog.FileName + ".dic", result.Dictionary);
 
-                string resultEncode = "";
-                foreach (var s in archiveDictionary.EncodeBytes)
-                {
-                    resultEncode += s;
-                }
-
-                ResultForm.Text = resultEncode;
+                Close();
             }
 
-           
+            //else
+            //{
+            //    //LengthSorce.Text += archiveDictionary.SourceString.Length;
+            //    LengthResult.Text += archiveDictionary.EncodeBytes.Count;
+
+            //    string resultEncode = "";
+            //    foreach (var s in archiveDictionary.EncodeBytes)
+            //    {
+            //        resultEncode += s;
+            //    }
+
+            //    ResultForm.Text = resultEncode;
+
+            //    WordDictionary.Text = string.Empty;
+            //    WordDictionary.Text = archiveDictionary.DictonaryToJSON();
+
+            //    DictionarySize.Text = string.Empty;
+            //    DictionarySize.Text += archiveDictionary.Dictonary.Count;
+            //}
+
+
         }
 
         private void Decode_Click(object sender, RoutedEventArgs e)
         {
-            var decodeSuccess = archiveDictionary.Decode(archiveDictionary.EncodeBytes);
+            var result = archiveDictionary.Decode(inputBytes);
 
-            LengthSorce.Text += archiveDictionary.SourceString.Length;
-            LengthResult.Text += archiveDictionary.DecodeString.Length;
-
-            ResultForm.Text = archiveDictionary.DecodeString;
+            ResultForm.Text = result;
         }
     }
 }
