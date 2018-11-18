@@ -13,4 +13,5 @@ L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.exe
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.pdb
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\Newtonsoft.Json.dll
 L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\Newtonsoft.Json.xml
-L:\Work\Maga\DictionaryArchive\DictionaryArchive\obj\Debug\DictionaryArchive.csprojResolveAssemblyReference.cache
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\log4net.dll
+L:\Work\Maga\DictionaryArchive\DictionaryArchive\bin\Debug\log4net.xml

@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -68,9 +72,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Archive\ArchiveDictionary.cs" />
-    <Compile Include="Archive\SortedModel.cs" />
+    <Compile Include="Archive\Archiver.cs" />
+    <Compile Include="Archive\Compressor.cs" />
+    <Compile Include="Archive\Decompressor.cs" />
+    <Compile Include="Archive\SaverLoader.cs" />
+    <Compile Include="Models\SortedModel.cs" />
     <Compile Include="Helpers\EncodeDecodeHelper.cs" />
-    <Compile Include="Infrastructure\IArchiveDictonary.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

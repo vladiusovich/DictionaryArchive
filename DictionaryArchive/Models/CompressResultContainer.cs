@@ -10,5 +10,8 @@ namespace DictionaryArchive.Models
     {
         public List<byte> EncodeBytes { get; set; }
         public string Dictionary { get; set; }
+        public string CommonDictionary { get; set; }
+        public int DictionaryWordCount { get; set; }
+        public int CommonDictionaryWordCount { get; set; }
     }
 }

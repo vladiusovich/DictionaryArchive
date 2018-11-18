@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace DictionaryArchive.Archive
 {
-    public class SortedModel
+    public class SaverLoader
     {
-        public decimal SortFactor;
-        public string Word;
     }
 }

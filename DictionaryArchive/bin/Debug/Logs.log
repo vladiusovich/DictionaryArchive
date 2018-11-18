@@ -1,0 +1,65 @@
+2018-11-18 21:46:07,222 [9] ERROR DictionaryArchive.Archive.Compressor System.IndexOutOfRangeException: »ндекс находилс€ вне границ массива.
+   в System.String.get_Chars(Int32 index)
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 84
+2018-11-18 21:48:21,278 [9] ERROR DictionaryArchive.Archive.Compressor System.IndexOutOfRangeException: »ндекс находилс€ вне границ массива.
+   в System.String.get_Chars(Int32 index)
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 84
+2018-11-18 21:50:48,787 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:48,833 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:48,895 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,021 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,059 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,164 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,194 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,269 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,290 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,400 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,432 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,477 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,526 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,629 [9] ERROR DictionaryArchive.Archive.Compressor System.InvalidOperationException: ѕоследовательность не содержит соответствующий элемент
+   в System.Linq.Enumerable.First[TSource](IEnumerable`1 source, Func`2 predicate)
+   в DictionaryArchive.Archive.ArchiveDictionary.GetWordId(String word) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\ArchiveDictionary.cs:строка 79
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 109
+2018-11-18 21:50:49,695 [9] ERROR DictionaryArchive.Archive.Compressor System.IndexOutOfRangeException: »ндекс находилс€ вне границ массива.
+   в System.String.get_Chars(Int32 index)
+   в DictionaryArchive.Archive.Compressor.EncodeSourceTextToStreamOfBits(String sourceString) в l:\Work\Maga\DictionaryArchive\DictionaryArchive\Archive\Compressor.cs:строка 84
